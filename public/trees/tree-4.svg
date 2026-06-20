@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" fill="none">
+  <!-- Trunk — thick and sturdy -->
+  <path d="M60 152 L60 68" stroke="#3d6b50" stroke-width="6" stroke-linecap="round"/>
+  <!-- Root flare -->
+  <path d="M60 148 L50 155" stroke="#3d6b50" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <path d="M60 148 L70 155" stroke="#3d6b50" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <!-- All branches -->
+  <path d="M60 120 L32 102" stroke="#3d6b50" stroke-width="3"   stroke-linecap="round"/>
+  <path d="M60 120 L88 102" stroke="#3d6b50" stroke-width="3"   stroke-linecap="round"/>
+  <path d="M60 104 L28 82"  stroke="#3d6b50" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M60 104 L92 82"  stroke="#3d6b50" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M60 88 L42 68"   stroke="#3d6b50" stroke-width="2"   stroke-linecap="round"/>
+  <path d="M60 88 L78 68"   stroke="#3d6b50" stroke-width="2"   stroke-linecap="round"/>
+  <!-- Full lush canopy -->
+  <circle cx="32"  cy="98"  r="14" fill="#4a9e78" opacity="0.70"/>
+  <circle cx="88"  cy="98"  r="14" fill="#4a9e78" opacity="0.70"/>
+  <circle cx="24"  cy="78"  r="12" fill="#5ab088" opacity="0.65"/>
+  <circle cx="96"  cy="78"  r="12" fill="#5ab088" opacity="0.65"/>
+  <circle cx="42"  cy="64"  r="11" fill="#4a9e78" opacity="0.75"/>
+  <circle cx="78"  cy="64"  r="11" fill="#4a9e78" opacity="0.75"/>
+  <circle cx="60"  cy="55"  r="15" fill="#5ab088" opacity="0.75"/>
+  <!-- Top cluster highlight -->
+  <circle cx="60"  cy="44"  r="9"  fill="#6cc49a" opacity="0.60"/>
+  <circle cx="48"  cy="50"  r="7"  fill="#6cc49a" opacity="0.50"/>
+  <circle cx="72"  cy="50"  r="7"  fill="#6cc49a" opacity="0.50"/>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" fill="none">
+  <!-- Trunk -->
+  <path d="M60 150 L60 70" stroke="#4a7a5e" stroke-width="5" stroke-linecap="round"/>
+  <!-- Branches -->
+  <path d="M60 118 L34 100" stroke="#4a7a5e" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M60 118 L86 100" stroke="#4a7a5e" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M60 100 L30 80"  stroke="#4a7a5e" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M60 100 L90 80"  stroke="#4a7a5e" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M60 85 L44 68"   stroke="#4a7a5e" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M60 85 L76 68"   stroke="#4a7a5e" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- Dense leaf clusters -->
+  <circle cx="34" cy="97"  r="12" fill="#4a9e78" opacity="0.65"/>
+  <circle cx="86" cy="97"  r="12" fill="#4a9e78" opacity="0.65"/>
+  <circle cx="28" cy="77"  r="10" fill="#5ab088" opacity="0.60"/>
+  <circle cx="92" cy="77"  r="10" fill="#5ab088" opacity="0.60"/>
+  <circle cx="44" cy="65"  r="9"  fill="#4a9e78" opacity="0.70"/>
+  <circle cx="76" cy="65"  r="9"  fill="#4a9e78" opacity="0.70"/>
+  <circle cx="60" cy="60"  r="11" fill="#5ab088" opacity="0.65"/>
+</svg>
