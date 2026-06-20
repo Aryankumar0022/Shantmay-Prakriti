@@ -1,6 +1,6 @@
-// app/layout.tsx — Root layout: providers, fonts, metadata
+// app/layout.tsx — Root layout (Server Component)
 import type { Metadata } from "next";
-import { AuthProvider } from "@/context/AuthContext";
+import ClientProviders from "@/components/ClientProviders";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
   );
