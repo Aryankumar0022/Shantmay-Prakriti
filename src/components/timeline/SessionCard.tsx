@@ -2,6 +2,7 @@
 // components/timeline/SessionCard.tsx — Single session history item
 import Image from "next/image";
 import type { Session } from "@/types";
+import { useI18n } from "@/hooks/useI18n";
 import styles from "./SessionCard.module.css";
 
 interface Props {
@@ -21,6 +22,7 @@ function formatDate(unixMs: number): string {
 }
 
 export default function SessionCard({ session }: Props) {
+  const { t } = useI18n();
   const isCompleted = session.status === "completed";
 
   return (
@@ -44,7 +46,7 @@ export default function SessionCard({ session }: Props) {
       </div>
 
       <span className={`${styles.badge} ${isCompleted ? styles.badgeCompleted : styles.badgeAbandoned}`}>
-        {isCompleted ? "✦ Done" : "Abandoned"}
+        {isCompleted ? t("timeline_done") : t("status_abandoned")}
       </span>
     </div>
   );

@@ -7,6 +7,7 @@ import AppShell from "@/components/nav/AppShell";
 import { useAuth } from "@/context/AuthContext";
 import { updateProfile } from "@/lib/firestore";
 import { signOutUser } from "@/lib/auth";
+import { useI18n } from "@/hooks/useI18n";
 import type { Language } from "@/types";
 import styles from "./ProfilePage.module.css";
 
@@ -51,6 +52,7 @@ function formatTotalTime(seconds: number): string {
 
 export default function ProfilePage() {
   const { user, profile, refreshProfile } = useAuth();
+  const { t } = useI18n();
   const router = useRouter();
 
   const [country,  setCountry]  = useState(profile?.country  ?? "IN");
@@ -108,20 +110,20 @@ export default function ProfilePage() {
         <div className={styles.stats} role="region" aria-label="Your focus stats">
           <div className={styles.statCard}>
             <span className={styles.statValue}>{formatTotalTime(profile?.totalSeconds ?? 0)}</span>
-            <span className={styles.statLabel}>Total Focus</span>
+            <span className={styles.statLabel}>{t("stat_total_focus")}</span>
           </div>
           <div className={styles.statCard}>
             <span className={styles.statValue}>{profile?.leafCount ?? 0} 🌿</span>
-            <span className={styles.statLabel}>Trees Grown</span>
+            <span className={styles.statLabel}>{t("stat_trees_grown")}</span>
           </div>
         </div>
 
         {/* Preferences form */}
         <div className={styles.section}>
-          <p className={styles.sectionTitle}>Preferences</p>
+          <p className={styles.sectionTitle}>{t("profile_preferences")}</p>
 
           <div className={styles.field}>
-            <label htmlFor="country-select" className={styles.label}>Country</label>
+            <label htmlFor="country-select" className={styles.label}>{t("profile_country")}</label>
             <select
               id="country-select"
               className={styles.select}
@@ -135,7 +137,7 @@ export default function ProfilePage() {
           </div>
 
           <div className={styles.field}>
-            <label htmlFor="language-select" className={styles.label}>Language</label>
+            <label htmlFor="language-select" className={styles.label}>{t("profile_language")}</label>
             <select
               id="language-select"
               className={styles.select}
@@ -154,10 +156,10 @@ export default function ProfilePage() {
             onClick={handleSave}
             disabled={saving}
           >
-            {saving ? "Saving…" : "Save Changes"}
+            {saving ? t("profile_saving") : t("profile_save")}
           </button>
 
-          {saved && <p className={styles.savedMsg}>✓ Saved successfully</p>}
+          {saved && <p className={styles.savedMsg}>{t("profile_saved")}</p>}
         </div>
 
         {/* Sign out */}
@@ -166,7 +168,7 @@ export default function ProfilePage() {
           className={styles.signOutBtn}
           onClick={handleSignOut}
         >
-          Sign out
+          {t("profile_signout")}
         </button>
 
       </div>

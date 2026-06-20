@@ -2,6 +2,7 @@
 // components/tree/TreeGrowth.tsx — Shows the correct SVG frame based on session progress
 import Image from "next/image";
 import type { TimerStatus } from "@/types";
+import { useI18n } from "@/hooks/useI18n";
 import styles from "./TreeGrowth.module.css";
 
 interface Props {
@@ -18,12 +19,19 @@ function getFrame(progress: number, status: TimerStatus): number {
   return Math.min(3, Math.floor(progress * 4));
 }
 
-const FRAME_LABELS = ["Waiting to grow…", "Just sprouting…", "Growing steadily…", "Almost there…", "Fully grown! 🌿"];
-
 export default function TreeGrowth({ progress, status }: Props) {
+  const { t } = useI18n();
   const frame = getFrame(progress, status);
   const isCompleted = status === "completed";
   const isAbandoned = status === "abandoned";
+
+  const FRAME_LABELS = [
+    t("tree_waiting"),
+    t("tree_sprouting"),
+    t("tree_growing"),
+    t("tree_almost"),
+    t("tree_fully_grown"),
+  ];
 
   return (
     <div className={styles.container}>

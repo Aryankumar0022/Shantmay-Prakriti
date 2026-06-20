@@ -7,6 +7,7 @@ import PresetButtons from "@/components/timer/PresetButtons";
 import TreeGrowth from "@/components/tree/TreeGrowth";
 import { useTimer } from "@/hooks/useTimer";
 import { useSession } from "@/hooks/useSession";
+import { useI18n } from "@/hooks/useI18n";
 import styles from "./TimerPage.module.css";
 
 const DEFAULT_MINUTES = 25;
@@ -20,6 +21,7 @@ export default function TimerPage() {
 
   const durationSeconds = selectedMinutes * 60;
   const session = useSession();
+  const { t } = useI18n();
 
   // Callbacks passed to useTimer — use elapsedRef to avoid circular dep
   const handleComplete = useCallback(async () => {
@@ -119,17 +121,17 @@ export default function TimerPage() {
           <div className={styles.btnRow}>
             {timer.status === "idle" && (
               <button className={styles.startBtn} onClick={handleStart} id="timer-start-btn">
-                Start Session
+                {t("timer_start")}
               </button>
             )}
 
             {timer.status === "running" && (
               <>
                 <button className={styles.ghostBtn} onClick={timer.pause} id="timer-pause-btn">
-                  Pause
+                  {t("timer_pause")}
                 </button>
                 <button className={`${styles.ghostBtn} ${styles.dangerBtn}`} onClick={timer.abandon} id="timer-abandon-btn">
-                  Give Up
+                  {t("timer_give_up")}
                 </button>
               </>
             )}
@@ -137,17 +139,17 @@ export default function TimerPage() {
             {timer.status === "paused" && (
               <>
                 <button className={styles.startBtn} onClick={timer.resume} id="timer-resume-btn">
-                  Resume
+                  {t("timer_resume")}
                 </button>
                 <button className={`${styles.ghostBtn} ${styles.dangerBtn}`} onClick={timer.abandon} id="timer-abandon-btn">
-                  Give Up
+                  {t("timer_give_up")}
                 </button>
               </>
             )}
 
             {(timer.status === "completed" || timer.status === "abandoned") && (
               <button className={styles.startBtn} onClick={handleReset} id="timer-reset-btn">
-                New Session
+                {t("timer_new_session")}
               </button>
             )}
           </div>
@@ -155,8 +157,8 @@ export default function TimerPage() {
           {/* Completion message */}
           {timer.status === "completed" && (
             <div className={styles.completedMsg}>
-              <h2>Your tree grew! 🌿</h2>
-              <p>Wonderful session. Your forest is growing.</p>
+              <h2>{t("timer_tree_grew")}</h2>
+              <p>{t("timer_wonderful_session")}</p>
             </div>
           )}
 
@@ -166,9 +168,9 @@ export default function TimerPage() {
               className={`${styles.audioToggle} ${audioOn ? styles.audioToggleActive : ""}`}
               onClick={() => setAudioOn((v) => !v)}
               id="audio-toggle-btn"
-              aria-label={audioOn ? "Turn off ambient audio" : "Turn on rain sounds"}
+              aria-label={audioOn ? t("timer_rain_off") : t("timer_rain_on")}
             >
-              {audioOn ? "🔊" : "🔇"} {audioOn ? "Rain sounds on" : "Rain sounds off"}
+              {audioOn ? "🔊" : "🔇"} {audioOn ? t("timer_rain_on") : t("timer_rain_off")}
             </button>
           )}
         </div>

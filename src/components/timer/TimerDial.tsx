@@ -1,6 +1,7 @@
 "use client";
 // components/timer/TimerDial.tsx — SVG circular timer ring
 import type { TimerStatus } from "@/types";
+import { useI18n } from "@/hooks/useI18n";
 import styles from "./TimerDial.module.css";
 
 interface Props {
@@ -21,15 +22,19 @@ const STROKE     = 10;
 const RADIUS     = (SIZE - STROKE * 2) / 2;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
-const STATUS_LABELS: Record<TimerStatus, string> = {
-  idle:      "Ready",
-  running:   "Focusing",
-  paused:    "Paused",
-  completed: "Complete ✦",
-  abandoned: "Abandoned",
-};
-
 export default function TimerDial({ remaining, duration, progress, status }: Props) {
+  const { t } = useI18n();
+
+  const getStatusLabel = (status: TimerStatus) => {
+    switch (status) {
+      case "running":   return t("status_focusing");
+      case "paused":    return t("status_paused");
+      case "completed": return t("status_complete");
+      case "abandoned": return t("status_abandoned");
+      default:          return t("status_ready");
+    }
+  };
+
   const offset = CIRCUMFERENCE * (1 - progress);
 
   const isRunning   = status === "running";
@@ -88,7 +93,7 @@ export default function TimerDial({ remaining, duration, progress, status }: Pro
       {/* Center: time + status */}
       <div className={styles.center}>
         <span className={styles.timeDisplay}>{formatTime(remaining)}</span>
-        <span className={styles.statusLabel}>{STATUS_LABELS[status]}</span>
+        <span className={styles.statusLabel}>{getStatusLabel(status)}</span>
       </div>
     </div>
   );

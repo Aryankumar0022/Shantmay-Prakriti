@@ -1,5 +1,6 @@
 "use client";
-// components/timer/PresetButtons.tsx — Preset duration selector
+// components/timer/PresetButtons.tsx — Duration selector pills
+import { useI18n } from "@/hooks/useI18n";
 import styles from "./PresetButtons.module.css";
 
 const PRESETS = [
@@ -17,8 +18,9 @@ interface Props {
 }
 
 export default function PresetButtons({ selectedMinutes, onSelect, disabled }: Props) {
+  const { t } = useI18n();
   return (
-    <div className={styles.group} role="group" aria-label="Preset durations">
+    <div className={styles.group} role="group" aria-label={t("preset_group_aria")}>
       {PRESETS.map(({ minutes, label, recommended }) => (
         <button
           key={minutes}
@@ -30,7 +32,7 @@ export default function PresetButtons({ selectedMinutes, onSelect, disabled }: P
         >
           {label}
           {recommended && (
-            <span className={styles.recommended}>✦ Best</span>
+            <span className={styles.recommended}>{t("preset_best")}</span>
           )}
         </button>
       ))}

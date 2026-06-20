@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 import { signOutUser } from "@/lib/auth";
+import { useI18n } from "@/hooks/useI18n";
 import styles from "./NavBar.module.css";
 
 const NAV_TABS = [
@@ -43,6 +44,7 @@ export default function NavBar() {
   const pathname = usePathname();
   const router   = useRouter();
   const { profile, user } = useAuth();
+  const { t } = useI18n();
 
   const handleSignOut = async () => {
     await signOutUser();
@@ -78,6 +80,9 @@ export default function NavBar() {
         <div className={styles.tabs} role="tablist">
           {NAV_TABS.map(({ href, label, icon }) => {
             const isActive = pathname.startsWith(href);
+            const translatedLabel = label === "Focus" ? t("nav_focus") : 
+                                    label === "Timeline" ? t("nav_timeline") : 
+                                    t("nav_profile");
             return (
               <Link
                 key={href}
@@ -88,7 +93,7 @@ export default function NavBar() {
                 id={`nav-tab-${label.toLowerCase()}`}
               >
                 {icon}
-                <span>{label}</span>
+                <span>{translatedLabel}</span>
               </Link>
             );
           })}

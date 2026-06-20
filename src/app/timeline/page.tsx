@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import AppShell from "@/components/nav/AppShell";
 import SessionCard from "@/components/timeline/SessionCard";
 import { useAuth } from "@/context/AuthContext";
+import { useI18n } from "@/hooks/useI18n";
 import { getUserSessions } from "@/lib/firestore";
 import type { Session } from "@/types";
 import styles from "./TimelinePage.module.css";
@@ -17,6 +18,7 @@ function formatTotalTime(seconds: number): string {
 
 export default function TimelinePage() {
   const { user, profile } = useAuth();
+  const { t } = useI18n();
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading]   = useState(true);
 
@@ -34,33 +36,33 @@ export default function TimelinePage() {
     <AppShell>
       <div className={styles.page}>
         <div className={styles.header}>
-          <h1 className={styles.title}>Your Timeline</h1>
-          <p className={styles.subtitle}>Every session — completed and abandoned.</p>
+          <h1 className={styles.title}>{t("timeline_title")}</h1>
+          <p className={styles.subtitle}>{t("timeline_subtitle")}</p>
         </div>
 
         {/* Stats row */}
         <div className={styles.stats} role="region" aria-label="Focus statistics">
           <div className={styles.statCard}>
             <span className={styles.statValue}>{formatTotalTime(profile?.totalSeconds ?? 0)}</span>
-            <span className={styles.statLabel}>Total Focus</span>
+            <span className={styles.statLabel}>{t("stat_total_focus")}</span>
           </div>
           <div className={styles.statCard}>
             <span className={styles.statValue}>{profile?.leafCount ?? 0} 🌿</span>
-            <span className={styles.statLabel}>Trees Grown</span>
+            <span className={styles.statLabel}>{t("stat_trees_grown")}</span>
           </div>
           <div className={styles.statCard}>
             <span className={styles.statValue}>{sessions.length}</span>
-            <span className={styles.statLabel}>Sessions</span>
+            <span className={styles.statLabel}>{t("stat_sessions")}</span>
           </div>
         </div>
 
         {/* Session list */}
         {loading ? (
-          <p className={styles.empty}>Loading sessions…</p>
+          <p className={styles.empty}>{t("timeline_loading")}</p>
         ) : sessions.length === 0 ? (
           <div className={styles.empty}>
             <span className={styles.emptyIcon}>🌱</span>
-            No sessions yet. Start your first focus timer!
+            {t("timeline_empty")}
           </div>
         ) : (
           <div className={styles.list} role="list" aria-label="Session history">
