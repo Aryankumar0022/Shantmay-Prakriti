@@ -14,19 +14,21 @@ const DEFAULT_MINUTES = 25;
 export default function TimerPage() {
   const [selectedMinutes, setSelectedMinutes] = useState(DEFAULT_MINUTES);
   const [audioOn, setAudioOn] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioRef   = useRef<HTMLAudioElement | null>(null);
+  // Ref to hold elapsed seconds so callbacks don't stale-close over it
+  const elapsedRef = useRef<number>(0);
 
   const durationSeconds = selectedMinutes * 60;
-
   const session = useSession();
 
+  // Callbacks passed to useTimer — use elapsedRef to avoid circular dep
   const handleComplete = useCallback(async () => {
     await session.completeSession(durationSeconds, durationSeconds);
     audioRef.current?.pause();
   }, [session, durationSeconds]);
 
   const handleAbandon = useCallback(async () => {
-    await session.abandonSession(durationSeconds, timer.elapsed);
+    await session.abandonSession(durationSeconds, elapsedRef.current);
     audioRef.current?.pause();
   }, [session, durationSeconds]);
 
@@ -36,30 +38,35 @@ export default function TimerPage() {
     onAbandon:  handleAbandon,
   });
 
-  // Ambient audio — free rain sound via public folder
+  // Keep elapsedRef in sync with timer state
+  useEffect(() => {
+    elapsedRef.current = timer.elapsed;
+  }, [timer.elapsed]);
+
+  // Ambient audio
   useEffect(() => {
     if (!audioRef.current) {
       audioRef.current = new Audio("/audio/rain.mp3");
-      audioRef.current.loop = true;
+      audioRef.current.loop   = true;
       audioRef.current.volume = 0.35;
     }
     if (audioOn && timer.status === "running") {
-      audioRef.current.play().catch(() => {}); // ignore autoplay policy errors
+      audioRef.current.play().catch(() => {});
     } else {
       audioRef.current.pause();
     }
   }, [audioOn, timer.status]);
 
-  // Abort on page unload mid-session
+  // Abandon on page unload mid-session
   useEffect(() => {
     const handleUnload = () => {
       if (timer.status === "running" || timer.status === "paused") {
-        session.abandonSession(durationSeconds, timer.elapsed);
+        session.abandonSession(durationSeconds, elapsedRef.current);
       }
     };
     window.addEventListener("beforeunload", handleUnload);
     return () => window.removeEventListener("beforeunload", handleUnload);
-  }, [timer.status, timer.elapsed, durationSeconds, session]);
+  }, [timer.status, durationSeconds, session]);
 
   const handleStart = () => {
     session.startSession(durationSeconds);
@@ -85,7 +92,6 @@ export default function TimerPage() {
       <section className={styles.page} aria-label="Focus timer">
 
         <div className={styles.hero}>
-          {/* Tree + Timer side by side feel */}
           <div className={styles.treeSection}>
             <TreeGrowth progress={timer.progress} status={timer.status} />
           </div>

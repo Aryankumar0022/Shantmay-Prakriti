@@ -72,7 +72,10 @@ export function useTimer({ durationSeconds, onComplete, onAbandon }: UseTimerOpt
     onAbandon();
   }, [onAbandon]);
 
-  const reset = useCallback((newDuration?: number) => {
+  // newDuration is unused here — caller updates durationSeconds via state,
+  // which flows in as a prop on the next render. Reset just returns to idle.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const reset = useCallback((_newDuration?: number) => {
     clearTick();
     elapsedAtPauseRef.current = 0;
     setElapsed(0);
