@@ -1,0 +1,14 @@
+/*
+ * AppShell.module.css — Layout wrapper for authenticated pages
+ */
+
+@import '@/styles/tokens.css';
+
+.shell {
+  min-height: 100vh;
+}
+
+/* Push page content below fixed nav (nav height ≈ 64px) */
+.content {
+  padding-top: 72px;
+}
